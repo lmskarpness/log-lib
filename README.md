@@ -14,14 +14,14 @@ Create a new data_t object and set it's string value to the desired log message.
 char input[30];
 
 printf("Enter a message: ");
-scanf("%[^\n]s", input);
+scanf("%29[^\n]s", input);
 
 data_t input_data;
 input_data.string = input;
 ```
 
 In the above example, the user is prompted for input. The data received will be everything up to the new line character `\n`.
-> Note: The above code snippet does not account for inputs greater than 30 characters and will abort the program if that limit is exceeded.
+> Note: The above code snippet does not account for inputs greater than 29 characters and will abort the program if that limit is exceeded. The 30th character is '\0'.
 
 
 Finally, the message can be added to the log. Then the log can be saved to a file and the logger can be closed.
