@@ -4,7 +4,7 @@
 #include <time.h>
 
 typedef struct data_struct {
-    time_t time;
+    char *time;
     char *string;
 } data_t;
 

@@ -22,9 +22,13 @@ int addmsg(data_t data) {
     }
 
     // Gets the time since Jan 1, 1970 -- the Epoch -- in seconds.
-    // Conversion to exact readable time is tasked in the savelog function.
+    // Converts the epoch into a readable time string
     time_t current_time = time(NULL);
-    data.time = current_time;
+    char *time_str = ctime(&current_time);
+    time_str[strlen(time_str) - 1] = '\0';
+
+    // Populate time data with time string
+    data.time = time_str;
 
     // Filling new_msg with it's data
     new_msg->item = data;
@@ -63,28 +67,65 @@ void clearlog(void) {
 // Allocates enough space for a string containing the entire log, copies
 // the log into this string, and returns a pointer to the string.
 char *getlog(void) {
-    return NULL;
+    // Calculate the total length of the log
+    // Set a pointer to head of log list and initialize length to 0.
+    log_t *current = headptr;
+    size_t totalLength = 0;
+
+    // Iterate through the entire log list.
+    while (current != NULL) {
+        // Calculate the length of each log entry
+        size_t entryLength = snprintf(NULL, 0, "%s : %s\n", current->item.time, current->item.string);
+
+        // Add the length of the current entry to the total length
+        totalLength += entryLength;
+
+        current = current->next;
+    }
+
+    // Allocate memory for the log string
+    char *logString = (char *)malloc(totalLength + 1); // +1 for the null terminator
+
+    if (logString == NULL) {
+        // Allocation failed
+        return NULL;
+    }
+
+    // Concatenate log entries into the log string
+    current = headptr;
+    size_t offset = 0;
+
+    while (current != NULL) {
+        // Format the current log entry and copy it to the log string
+        size_t written = snprintf(logString + offset, totalLength - offset + 1, "%s : %s\n", current->item.time, current->item.string);
+
+        // Update the offset based on the characters written
+        offset += written;
+
+        current = current->next;
+    }
+
+    return logString;
 }
 
 // Saves the logged mssages to a disk file.
 int savelog(char *filename) {
+    // Open a file with "write" 
     FILE *file = fopen(filename, "w");
 
     if (file == NULL) {
+        // File could not be opened or created.
         return -1;
     }
 
     log_t *current = headptr;
 
+    // Print each entry into the file.
     while (current != NULL) {
-        char *time_str = ctime(&current->item.time);
-        time_str[strlen(time_str) - 1] = '\0';
-        fprintf(file, "%s : %s\n", time_str, current->item.string);
-        
+        fprintf(file, "%s : %s\n", current->item.time, current->item.string);
         current = current->next;
     }
 
     fclose(file);
-
     return 0;
 }
