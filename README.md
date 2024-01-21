@@ -33,3 +33,10 @@ clearlog();
 
 > [!WARNING]
 > Ensure you have used 'clearlog()' to free the memory allocated to storing logged data. Otherwise, data leaks may occur.
+
+## Compiling
+To use with your project, or to experiment with the library, include 'log.c' and your program as arguments to your compiler.
+If your program that includes 'log.h' is called 'test.c' and your desired output name is "myprogram", you might use:
+'''
+gcc test.c log.c -o myprogram
+'''
