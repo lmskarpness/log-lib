@@ -23,12 +23,18 @@ int addmsg(data_t data) {
 
     // Gets the time since Jan 1, 1970 -- the Epoch -- in seconds.
     // Converts the epoch into a readable time string
-    time_t current_time = time(NULL);
-    char *time_str = ctime(&current_time);
+    time_t time_epoch;
+    time(&time_epoch);
+    char *time_str = ctime(&time_epoch);
     time_str[strlen(time_str) - 1] = '\0';
 
     // Populate time data with time string
-    data.time = time_str;
+    data.time = (char *)malloc(strlen(time_str) + 1);
+    if (data.time == NULL) {
+        free(new_msg);
+        return -1;
+    }
+    strcpy(data.time, time_str);
 
     // Filling new_msg with it's data
     new_msg->item = data;
@@ -56,6 +62,7 @@ void clearlog(void) {
 
     while (current != NULL) {
         next = current->next;
+        free(current->item.time);
         free(current);
         current = next;
     }

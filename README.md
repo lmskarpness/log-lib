@@ -21,7 +21,8 @@ input_data.string = input;
 ```
 
 In the above example, the user is prompted for input. The data received will be everything up to the new line character `\n`.
-> Note: The above code snippet does not account for inputs greater than 29 characters and will cut off data inputted if that limit is exceeded. The 30th character is '\0'.
+> [!NOTE]  
+> The above code snippet does not account for inputs greater than 29 characters and will use proceeding characters as input for following streams.
 
 
 Finally, the message can be added to the log. Then the log can be saved to a file and the logger can be closed.
