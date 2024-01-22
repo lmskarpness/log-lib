@@ -1,6 +1,7 @@
 # log-lib: Logging Library
 Logs the current time and message data and saves it to a file. Can be used for logging of outputs for debugging, recording startup and shutdown events of a program, etc.
-> Note: This software is an adaption from ideas presented by Kay A. Robbins and Steven Robbins' textbook entitled "Unix Systems Programming: Commmunications, Concurrency, and Threads".
+> **Credit**
+> This library is an adaption from ideas presented by Kay A. Robbins and Steven Robbins' textbook entitled "Unix Systems Programming: Commmunications, Concurrency, and Threads", Exercise 2.13.
 
 ## How to use
 There is little setup involved for this software. Some use cases will look different, but below is an example to get started.

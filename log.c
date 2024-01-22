@@ -14,7 +14,7 @@ static log_t *tailptr = NULL;
 // Adds a log message to the list of logs
 int addmsg(data_t data) {
     // Create new list struct from data.
-    log_t *new_msg = (log_t *)malloc(sizeof(log_t));
+    log_t *new_msg = (log_t *)malloc(sizeof(log_t) + strlen(data.string) + 1);
     
     if (new_msg == NULL) {
         // Allocation failed
